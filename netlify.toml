@@ -1,0 +1,6 @@
+# Настройки Netlify для школьного музея.
+# При каждом деплое (то есть после каждого сохранения в админке)
+# Netlify запускает скрипт, который собирает content/*.json из Markdown-файлов.
+[build]
+  command = "node scripts/build-content.js"
+  publish = "."

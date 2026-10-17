@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Каталог экспонатов — музей «История пограничных войск», г. Похвистнево</title>
+  <meta name="description" content="Каталог из 45 экспонатов школьного музея «История пограничных войск» ГБОУ СОШ №3 г. Похвистнево: Великая Отечественная война (СССР и Германия), СВО, военная форма. Поиск, категории и теги.">
+  <meta name="theme-color" content="#0b2a5b">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:title" content="Каталог экспонатов — музей «История пограничных войск»">
+  <meta property="og:description" content="45 экспонатов с описаниями: поиск, категории, теги.">
+  <meta property="og:image" content="../images/hero.svg">
+  <link rel="icon" href="../images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-root="..">
+
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
+
+  <header class="header solid" id="header">
+    <div class="container header__inner">
+      <a class="logo" href="../index.html" aria-label="Школьный музей — на главную">
+        <svg class="logo__mark" viewBox="0 0 48 56" aria-hidden="true">
+          <path d="M24 2 4 9v20c0 12 8 20 20 25 12-5 20-13 20-25V9L24 2Z" fill="#0b2a5b" stroke="#b8934a" stroke-width="2"/>
+          <path d="M9 39h30v1c-3 6-8 10-15 13-7-3-12-7-15-13v-1Z" fill="#c8102e"/>
+          <text x="24" y="33" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="17" fill="#fff">ПВ</text>
+        </svg>
+        <span class="logo__text">
+          <strong>Школьный музей</strong>
+          <small>«История пограничных войск»</small>
+        </span>
+      </a>
+      <nav class="nav" id="nav" aria-label="Основное меню">
+        <ul class="nav__list">
+          <li><a href="../index.html">Главная</a></li>
+          <li><a href="../index.html#about">О музее</a></li>
+          <li><a href="../index.html#expositions">Экспозиции</a></li>
+          <li><a href="exhibits.html" class="active">Экспонаты</a></li>
+          <li><a href="../index.html#svo">СВО</a></li>
+          <li><a href="gallery.html">Фотогалерея</a></li>
+          <li><a href="../index.html#video">Видеоэкскурсия</a></li>
+          <li><a href="contacts.html">Контакты</a></li>
+        </ul>
+      </nav>
+      <div class="header__tools">
+        <button class="icon-btn" id="themeToggle" type="button" aria-label="Переключить тему оформления">
+          <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z" fill="currentColor"/></svg>
+          <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="currentColor"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 1.5v3M12 19.5v3M1.5 12h3M19.5 12h3M4.6 4.6l2.1 2.1M17.3 17.3l2.1 2.1M4.6 19.4l2.1-2.1M17.3 6.7l2.1-2.1"/></g></svg>
+        </button>
+        <button class="burger" id="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="nav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container">
+        <ol class="breadcrumbs" aria-label="Хлебные крошки">
+          <li><a href="../index.html">Главная</a></li>
+          <li>Экспонаты</li>
+        </ol>
+        <h1 class="title" data-reveal="up">Каталог экспонатов</h1>
+        <p class="sub" data-reveal="up" style="--d:.1s"><span data-exhibit-count="nom">45 экспонатов</span> с описаниями. Найдите нужный предмет через поиск, выберите раздел или тег.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="toolbar">
+          <label class="search" for="searchInput">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="m20 20-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <input id="searchInput" type="search" placeholder="Поиск: дрон, Mauser, граната, карта, номер экспоната…" autocomplete="off">
+            <button class="search__clear" id="searchClear" type="button" aria-label="Очистить поиск">×</button>
+          </label>
+          <p class="chips-label">Разделы</p>
+          <div class="chips" id="chips" role="group" aria-label="Разделы"></div>
+          <p class="chips-label">Теги</p>
+          <div class="chips chips--tags" id="tagChips" role="group" aria-label="Теги"></div>
+          <p class="results-info" id="resultsInfo" aria-live="polite"></p>
+        </div>
+
+        <div class="cards" id="cards"></div>
+
+        <div class="empty" id="empty">
+          <strong>Ничего не найдено</strong>
+          Попробуйте изменить запрос или выбрать другой раздел.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__bottom" style="border-top:0">
+      <div class="container footer__bottom-inner">
+        <span>© <span id="year">2026</span> Школьный музей «История пограничных войск» ГБОУ СОШ №3 г. Похвистнево</span>
+        <span>Память. Мужество. Отечество.</span>
+      </div>
+    </div>
+  </footer>
+
+  <button class="to-top" id="toTop" type="button" aria-label="Наверх">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5m-6 6 6-6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+
+  <!-- marked.js — превращает Markdown-описания из админки в HTML -->
+  <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js" defer></script>
+  <script src="../js/script.js" defer></script>
+</body>
+</html>
