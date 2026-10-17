@@ -1,0 +1,4 @@
+---
+title: "быт"
+slug: everyday
+---

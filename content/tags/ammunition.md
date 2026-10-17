@@ -1,0 +1,4 @@
+---
+title: "боеприпасы"
+slug: ammunition
+---

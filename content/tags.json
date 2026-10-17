@@ -1,0 +1,107 @@
+[
+ {
+  "slug": "afghanistan",
+  "title": "Афганистан",
+  "description": ""
+ },
+ {
+  "slug": "ammunition",
+  "title": "боеприпасы",
+  "description": ""
+ },
+ {
+  "slug": "everyday",
+  "title": "быт",
+  "description": ""
+ },
+ {
+  "slug": "rifle",
+  "title": "винтовка",
+  "description": ""
+ },
+ {
+  "slug": "vs-rf",
+  "title": "ВС РФ",
+  "description": ""
+ },
+ {
+  "slug": "germany",
+  "title": "Германия",
+  "description": ""
+ },
+ {
+  "slug": "grenade",
+  "title": "граната",
+  "description": ""
+ },
+ {
+  "slug": "documents",
+  "title": "документы",
+  "description": ""
+ },
+ {
+  "slug": "drone",
+  "title": "дрон",
+  "description": ""
+ },
+ {
+  "slug": "map",
+  "title": "карта",
+  "description": ""
+ },
+ {
+  "slug": "lend-lease",
+  "title": "Ленд-лиз",
+  "description": ""
+ },
+ {
+  "slug": "luftwaffe",
+  "title": "Люфтваффе",
+  "description": ""
+ },
+ {
+  "slug": "medicine",
+  "title": "медицина",
+  "description": ""
+ },
+ {
+  "slug": "mines",
+  "title": "мины",
+  "description": ""
+ },
+ {
+  "slug": "trench-art",
+  "title": "окопное творчество",
+  "description": ""
+ },
+ {
+  "slug": "weapons",
+  "title": "оружие",
+  "description": ""
+ },
+ {
+  "slug": "svo",
+  "title": "СВО",
+  "description": ""
+ },
+ {
+  "slug": "signals",
+  "title": "связь",
+  "description": ""
+ },
+ {
+  "slug": "equipment",
+  "title": "снаряжение",
+  "description": ""
+ },
+ {
+  "slug": "ussr",
+  "title": "СССР",
+  "description": ""
+ },
+ {
+  "slug": "uniform",
+  "title": "форма",
+  "description": ""
+ }
+]

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 56">
+<path d="M24 2 4 9v20c0 12 8 20 20 25 12-5 20-13 20-25V9L24 2Z" fill="#0b2a5b" stroke="#b8934a" stroke-width="2"/>
+<path d="M9 39h30v1c-3 6-8 10-15 13-7-3-12-7-15-13v-1Z" fill="#c8102e"/>
+<text x="24" y="33" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="17" fill="#fff">ПВ</text>
+</svg>

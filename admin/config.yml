@@ -1,0 +1,186 @@
+# ============================================================
+#  Decap CMS — настройки админки школьного музея
+#  Админка открывается по адресу  https://ВАШ-САЙТ/admin/
+# ============================================================
+
+# ------------------------------------------------------------
+#  1. ВХОД И ХРАНЕНИЕ (backend)
+#  Выберите ОДИН из вариантов — остальные оставьте закомментированными.
+# ------------------------------------------------------------
+
+# ВАРИАНТ А (по умолчанию) — сайт на Netlify, вход через Netlify Identity.
+# Редактору не нужен аккаунт на GitHub — достаточно e-mail и пароля.
+# ВНИМАНИЕ: Netlify помечает Git Gateway как устаревший: у кого он включён,
+# тот работает, но для новых настроек Netlify его не рекомендует.
+# Если при включении Git Gateway возникнут проблемы — переходите на вариант Б.
+backend:
+  name: git-gateway
+  branch: main            # ← ваша основная ветка (main или master)
+
+# ВАРИАНТ Б — вход через GitHub (надёжнее на будущее).
+# Нужен аккаунт GitHub с правом записи в репозиторий и OAuth-провайдер
+# (для Netlify — в настройках сайта; для GitHub Pages — OAuth-прокси).
+# Чтобы включить: удалите/закомментируйте блок «backend» выше и раскомментируйте этот.
+#
+# backend:
+#   name: github
+#   repo: ИМЯ-ПОЛЬЗОВАТЕЛЯ/НАЗВАНИЕ-РЕПОЗИТОРИЯ   # например: school3-pohvistnevo/museum
+#   branch: main
+#   # Только если OAuth-прокси у вас свой (GitHub Pages), укажите его адрес:
+#   # base_url: https://ваш-oauth-прокси.example.workers.dev
+#   # auth_endpoint: auth
+
+# Для локальной проверки (npx decap-server) — см. README.
+local_backend: true
+
+# Режим публикации: сохранение = сразу коммит в ветку main = сайт обновляется.
+# (Для «черновик → проверка → публикация» замените на: publish_mode: editorial_workflow)
+
+# ------------------------------------------------------------
+#  2. МЕДИА: куда складываются загруженные фото
+# ------------------------------------------------------------
+media_folder: "images/uploads"          # папка в репозитории
+public_folder: "/images/uploads"        # путь, который записывается в файлы экспонатов
+
+locale: "ru"                            # интерфейс админки на русском
+site_url: ""                            # ← можно указать адрес сайта: https://museum.netlify.app
+display_url: ""                         # ← он же (показывается ссылкой «Перейти на сайт»)
+slug:
+  encoding: "ascii"
+  clean_accents: true
+
+# ------------------------------------------------------------
+#  3. КОЛЛЕКЦИИ
+# ------------------------------------------------------------
+collections:
+
+  # ==========================================================
+  #  КАТЕГОРИИ (разделы каталога)
+  #  Файл категории называется по её slug: content/categories/ww2-ussr.md
+  # ==========================================================
+  - name: "categories"
+    label: "Категории"
+    label_singular: "Категория"
+    folder: "content/categories"
+    create: true
+    extension: "md"
+    format: "frontmatter"
+    slug: "{{fields.slug}}"                 # имя файла = латинский идентификатор
+    summary: "{{order}}. {{title}}"
+    sortable_fields: ["order", "title"]
+    fields:
+      - { label: "Название категории", name: "title", widget: "string",
+          hint: "Например: Великая Отечественная война. СССР" }
+
+      - { label: "Короткое название (для кнопок фильтра и карточек)", name: "short_title",
+          widget: "string", required: false,
+          hint: "Например: ВОВ · СССР. Если оставить пустым — используется полное название." }
+
+      - { label: "Латинский идентификатор (slug)", name: "slug", widget: "string",
+          pattern: ["^[a-z0-9-]+$", "Только строчные латинские буквы, цифры и дефис, например: ww2-ussr"],
+          hint: "Используется в ссылках. ⚠ После создания не меняйте — иначе экспонаты потеряют связь с категорией." }
+
+      - { label: "Родительская категория", name: "parent", widget: "relation",
+          collection: "categories", search_fields: ["title"], value_field: "slug",
+          display_fields: ["title"], required: false,
+          hint: "Заполняйте, только если это подраздел (например, «СССР» внутри «Великой Отечественной войны»). Фильтр родителя показывает и экспонаты подразделов." }
+
+      - { label: "Порядок в меню", name: "order", widget: "number", value_type: "int", min: 1, default: 100,
+          hint: "Чем меньше число, тем левее/выше категория в фильтре." }
+
+      - { label: "Цвет плашки (необязательно)", name: "color", widget: "color", required: false,
+          hint: "Если не выбран — используется цвет по умолчанию." }
+
+      - label: "Картинка-заглушка"
+        name: "placeholder"
+        widget: "select"
+        default: "ww2"
+        hint: "Показывается у экспоната, пока для него не загружено фото."
+        options:
+          - { label: "Великая Отечественная", value: "ww2" }
+          - { label: "Современность / СВО", value: "modern" }
+          - { label: "Военная форма", value: "uniform" }
+          - { label: "Награды и документы", value: "awards" }
+          - { label: "Пограничные войска", value: "border" }
+          - { label: "Библиотека", value: "library" }
+
+      - { label: "Краткое описание", name: "description", widget: "text", required: false }
+
+  # ==========================================================
+  #  ТЕГИ
+  #  Файл тега называется по его slug: content/tags/weapons.md
+  # ==========================================================
+  - name: "tags"
+    label: "Теги"
+    label_singular: "Тег"
+    folder: "content/tags"
+    create: true
+    extension: "md"
+    format: "frontmatter"
+    slug: "{{fields.slug}}"
+    summary: "{{title}}"
+    sortable_fields: ["title"]
+    fields:
+      - { label: "Название тега", name: "title", widget: "string", hint: "Например: оружие" }
+
+      - { label: "Латинский идентификатор (slug)", name: "slug", widget: "string",
+          pattern: ["^[a-z0-9-]+$", "Только строчные латинские буквы, цифры и дефис, например: weapons"],
+          hint: "⚠ После создания не меняйте." }
+
+      - { label: "Описание (необязательно)", name: "description", widget: "text", required: false }
+
+  # ==========================================================
+  #  ЭКСПОНАТЫ
+  #  Файл экспоната называется по номеру: content/exhibits/3.md
+  #  Описание хранится в теле файла (поле «body») — так редактор
+  #  показывает удобную панель форматирования и предпросмотр.
+  # ==========================================================
+  - name: "exhibits"
+    label: "Экспонаты"
+    label_singular: "Экспонат"
+    folder: "content/exhibits"
+    create: true
+    extension: "md"
+    format: "frontmatter"
+    slug: "{{fields.number}}"
+    summary: "№{{number}} — {{title}}"
+    sortable_fields: ["number", "title", "category"]
+    view_filters:
+      - { label: "Только избранные", field: "featured", pattern: true }
+    fields:
+      - { label: "Номер экспоната", name: "number", widget: "string",
+          pattern: ["^[0-9]+$", "Только цифры, например: 46"],
+          hint: "Уникальный номер из каталога. Он же — имя файла, поэтому после создания не меняйте." }
+
+      - { label: "Название", name: "title", widget: "string" }
+
+      # >>> СВЯЗЬ С КАТЕГОРИЯМИ <<<
+      # Виджет relation сам читает файлы из коллекции «categories».
+      # Новая категория появляется в этом списке сразу после сохранения.
+      - { label: "Категория", name: "category", widget: "relation",
+          collection: "categories", search_fields: ["title", "short_title"],
+          value_field: "slug", display_fields: ["title"] }
+
+      # >>> СВЯЗЬ С ТЕГАМИ <<< (множественный выбор из коллекции «tags»)
+      - { label: "Теги", name: "tags", widget: "relation", collection: "tags",
+          search_fields: ["title"], value_field: "slug", display_fields: ["title"],
+          multiple: true, required: false }
+
+      - { label: "Описание", name: "body", widget: "markdown",
+          buttons: ["bold", "italic", "link", "heading-two", "quote", "bulleted-list", "numbered-list"],
+          editor_components: ["image"],
+          hint: "Можно использовать форматирование: абзацы, списки, жирный шрифт." }
+
+      - { label: "Главное фото", name: "image", widget: "image", required: false,
+          choose_url: false,
+          hint: "Если фото не загружено, сайт возьмёт images/exhibits/НОМЕР.jpg, а если и его нет — картинку-заглушку." }
+
+      - { label: "Дополнительные фото (галерея)", name: "gallery", widget: "list", required: false,
+          field: { label: "Фото", name: "image", widget: "image", choose_url: false } }
+
+      - { label: "Ссылка на видео (Rutube или YouTube)", name: "video_url", widget: "string", required: false,
+          pattern: ["^https://(www\\.)?(rutube\\.ru|youtube\\.com|youtu\\.be)/.+$", "Ссылка должна начинаться с https:// и вести на Rutube или YouTube"],
+          hint: "Просто вставьте адрес страницы с видео — например, https://rutube.ru/video/…/" }
+
+      - { label: "Показывать на главной", name: "featured", widget: "boolean", default: false,
+          hint: "На главной странице выводятся первые 4 избранных экспоната (по номеру)." }

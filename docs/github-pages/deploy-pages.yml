@@ -1,0 +1,51 @@
+# ВАЖНО: этот файл нужен ТОЛЬКО для GitHub Pages.
+# Если сайт на Netlify — не используйте его (на Netlify всё делает netlify.toml).
+#
+# Как подключить:
+#   1. Создайте в репозитории папку .github/workflows/
+#   2. Положите туда этот файл (docs/github-pages/deploy-pages.yml -> .github/workflows/deploy-pages.yml)
+#   3. В репозитории: Settings -> Pages -> Source: выберите «GitHub Actions»
+#
+# После каждого сохранения в админке (коммит в main) GitHub сам пересоберёт
+# content/*.json и опубликует сайт — обычно это занимает 1–2 минуты.
+name: Публикация сайта на GitHub Pages
+
+on:
+  push:
+    branches: [main]          # ← ваша основная ветка
+  workflow_dispatch:           # ручной запуск из вкладки Actions
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # Собираем content/categories.json, tags.json, exhibits.json
+      - name: Сборка индекса контента
+        run: node scripts/build-content.js
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - id: deployment
+        uses: actions/deploy-pages@v4

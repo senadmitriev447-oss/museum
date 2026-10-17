@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+<defs>
+<linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3d4a5e"/><stop offset="1" stop-color="#1b222e"/></linearGradient>
+<pattern id="p" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0H0V48" fill="none" stroke="#fff" stroke-opacity=".05" stroke-width="1"/></pattern>
+</defs>
+<rect width="800" height="600" fill="url(#g)"/>
+<rect width="800" height="600" fill="url(#p)"/>
+<circle cx="656" cy="108" r="210" fill="#b8934a" fill-opacity=".12"/>
+<circle cx="96" cy="528" r="168" fill="#fff" fill-opacity=".06"/>
+<polygon points="400.0,174.0 425.2,241.3 497.0,244.5 440.7,289.2 460.0,358.5 400.0,318.8 340.0,358.5 359.3,289.2 303.0,244.5 374.8,241.3" fill="#b8934a" fill-opacity="0.55"/>
+<text x="400" y="420" text-anchor="middle" font-family="Georgia, serif" font-size="36" fill="#fff" fill-opacity=".85">Фото 8</text>
+<text x="400" y="456" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" fill="#fff" fill-opacity=".5" letter-spacing="3">ВРЕМЕННОЕ ФОТО</text>
+</svg>

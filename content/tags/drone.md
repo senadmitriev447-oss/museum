@@ -1,0 +1,4 @@
+---
+title: "дрон"
+slug: drone
+---

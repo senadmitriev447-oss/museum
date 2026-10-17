@@ -1,0 +1,4 @@
+---
+title: "мины"
+slug: mines
+---

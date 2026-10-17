@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex"> <!-- админку не нужно показывать в поиске -->
+  <title>Админка школьного музея</title>
+  <link rel="icon" href="../images/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+  <!-- Виджет входа Netlify Identity (нужен только для backend: git-gateway) -->
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+  <!-- Сама Decap CMS. Адрес можно «закрепить» на конкретной версии,
+       например decap-cms@3.8.4 — чтобы обновления не меняли админку неожиданно. -->
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+
+  <script>
+    /* ========================================================
+       Предпросмотр в редакторе: используем настоящий CSS сайта,
+       чтобы админ видел карточку так, как увидят посетители.
+       ======================================================== */
+    var siteCss = new URL('../css/style.css', window.location.href).href;
+    CMS.registerPreviewStyle(siteCss);
+    // Небольшая доработка стилей только для окна предпросмотра
+    CMS.registerPreviewStyle(
+      'body{padding:24px;background:var(--bg,#fff)}' +
+      '.pv{max-width:420px;margin:0 auto}' +
+      '.pv .card__text{display:block;-webkit-line-clamp:unset}' +
+      '.pv .md p{margin:0 0 .8em}' +
+      '.pv .pv-video{margin-top:12px;font-size:.85rem;color:#666}',
+      { raw: true }
+    );
+
+    var h = window.h;
+
+    /* Карточка экспоната */
+    var ExhibitPreview = window.createClass({
+      render: function () {
+        var entry = this.props.entry;
+        var title = entry.getIn(['data', 'title']) || 'Название экспоната';
+        var number = entry.getIn(['data', 'number']) || '—';
+        var category = entry.getIn(['data', 'category']) || '';
+        var tags = entry.getIn(['data', 'tags']);
+        var imageField = entry.getIn(['data', 'image']);
+        var imageUrl = imageField ? this.props.getAsset(imageField).toString() : '../images/ww2.svg';
+        var video = entry.getIn(['data', 'video_url']);
+        var featured = entry.getIn(['data', 'featured']);
+
+        return h('div', { className: 'pv' },
+          h('article', { className: 'card' },
+            h('div', { className: 'card__media' },
+              h('span', { className: 'card__num' }, '№ ' + number),
+              h('img', { src: imageUrl, alt: title, width: 800, height: 600 })
+            ),
+            h('div', { className: 'card__body' },
+              h('span', { className: 'card__cat' }, category),
+              h('h3', { className: 'card__title' }, title),
+              h('div', { className: 'card__text md' }, this.props.widgetFor('body')),
+              h('div', { className: 'card__tags' },
+                (tags ? tags.toJS() : []).map(function (t) { return h('span', { key: t }, t); })
+              ),
+              video ? h('div', { className: 'pv-video' }, '▶ Видео: ' + video) : null,
+              featured ? h('div', { className: 'pv-video' }, '★ Будет показан на главной') : null
+            )
+          )
+        );
+      }
+    });
+
+    /* Карточка категории и тега — простая сводка */
+    var CategoryPreview = window.createClass({
+      render: function () {
+        var e = this.props.entry;
+        return h('div', { className: 'pv' },
+          h('span', { className: 'card__cat', style: { color: e.getIn(['data', 'color']) || '' } },
+            e.getIn(['data', 'short_title']) || e.getIn(['data', 'title'])),
+          h('h2', {}, e.getIn(['data', 'title'])),
+          h('p', {}, e.getIn(['data', 'description']))
+        );
+      }
+    });
+    var TagPreview = window.createClass({
+      render: function () {
+        var e = this.props.entry;
+        return h('div', { className: 'pv' },
+          h('span', { className: 'chip active' }, e.getIn(['data', 'title'])),
+          h('p', {}, e.getIn(['data', 'description']))
+        );
+      }
+    });
+
+    CMS.registerPreviewTemplate('exhibits', ExhibitPreview);
+    CMS.registerPreviewTemplate('categories', CategoryPreview);
+    CMS.registerPreviewTemplate('tags', TagPreview);
+
+    /* После входа через Netlify Identity — перенаправление в админку */
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on('init', function (user) {
+        if (!user) {
+          window.netlifyIdentity.on('login', function () { document.location.href = '/admin/'; });
+        }
+      });
+    }
+  </script>
+</body>
+</html>

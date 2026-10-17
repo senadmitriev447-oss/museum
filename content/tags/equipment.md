@@ -1,0 +1,4 @@
+---
+title: "снаряжение"
+slug: equipment
+---

@@ -1,0 +1,4 @@
+---
+title: "оружие"
+slug: weapons
+---

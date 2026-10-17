@@ -1,0 +1,4 @@
+---
+title: "связь"
+slug: signals
+---

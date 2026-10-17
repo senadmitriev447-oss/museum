@@ -1,0 +1,62 @@
+[
+ {
+  "slug": "ww2",
+  "title": "Великая Отечественная война",
+  "short_title": "Великая Отечественная война",
+  "parent": "",
+  "order": 1,
+  "color": "",
+  "placeholder": "ww2",
+  "description": "Все экспонаты времён Великой Отечественной войны: советские и германские."
+ },
+ {
+  "slug": "ww2-ussr",
+  "title": "Великая Отечественная война. СССР",
+  "short_title": "ВОВ · СССР",
+  "parent": "ww2",
+  "order": 2,
+  "color": "",
+  "placeholder": "ww2",
+  "description": "Советские предметы снаряжения, быта и вооружения времён войны, включая поставки по Ленд-лизу."
+ },
+ {
+  "slug": "ww2-de",
+  "title": "Великая Отечественная война. Германия",
+  "short_title": "ВОВ · Германия",
+  "parent": "ww2",
+  "order": 3,
+  "color": "",
+  "placeholder": "ww2",
+  "description": "Германские боеприпасы, детали вооружения и снаряжение."
+ },
+ {
+  "slug": "svo",
+  "title": "Специальная военная операция (СВО)",
+  "short_title": "СВО",
+  "parent": "",
+  "order": 4,
+  "color": "",
+  "placeholder": "modern",
+  "description": "Трофеи и предметы, связанные с современными событиями."
+ },
+ {
+  "slug": "uniform",
+  "title": "Военная форма",
+  "short_title": "Военная форма",
+  "parent": "",
+  "order": 5,
+  "color": "",
+  "placeholder": "uniform",
+  "description": "Военная форма разных эпох."
+ },
+ {
+  "slug": "awards",
+  "title": "Награды и документы",
+  "short_title": "Награды и документы",
+  "parent": "",
+  "order": 6,
+  "color": "",
+  "placeholder": "awards",
+  "description": "Ордена, медали, значки, архивные материалы и литература."
+ }
+]
